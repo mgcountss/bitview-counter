@@ -299,7 +299,7 @@
         }
 
         function getInitialStats() {
-            fetch('https://bitview.mgcounts.com/' + type + '/' + id)
+            fetch('https://bitview-api.mgcounts.com/' + type + '/' + id)
                 .then(response => response.json())
                 .then(data => {
                     if (type == "user") {
