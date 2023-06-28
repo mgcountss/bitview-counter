@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="title" content="MGCounts - BitView">
+    <meta name="description" content="Track the stats of any BitView channel on MGCounts">
+    <meta property="twitter:title" content="MGCounts - BitView">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="../../logo.png">
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="../../logo.png">
+    <meta property="og:description" content="Track the stats of any BitView channel on MGCounts">
+    <meta property="twitter:description" content="Track the stats of any BitView channel on MGCounts">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="shortcut icon" href="./favicon.ico">
+    <link rel="stylesheet" href="./odometer.css">
+    <script src="./odometer.js" defer></script>
+    <script src="./highstock.js"></script>
+    <title>MGCounts - BitView</title>
+    <style>
+        body {
+            background-color: #242425;
+            font-family: Arial, Helvetica, sans-serif;
+            text-align: center;
+            color: #FFF;
+        }
+
+        img {
+            vertical-align: middle;
+        }
+
+        #nav {
+            float: left;
+            background-color: #000;
+            position: relative;
+            display: flex;
+            width: 100%;
+            padding-top: 0.2vw;
+        }
+
+        #nav>a>img {
+            width: 15vw;
+            height: 2.3vw;
+        }
+
+        #banner {
+            text-align: left;
+            width: 100%;
+            height: 11vw;
+            background-color: #000;
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .round {
+            margin-left: 1vw;
+            margin-top: 0.3vw;
+            width: 10vw;
+            height: 10vw;
+            border-radius: 50%;
+            border: 0.3vw solid #fff;
+            background-color: #000;
+            float: left;
+            object-fit: cover;
+        }
+
+        .rect {
+            margin-left: 1vw;
+            margin-top: 0.3vw;
+            width: 15vw;
+            height: 10vw;
+            border: 0.3vw solid #fff;
+            background-color: #000;
+            float: left;
+            object-fit: cover;
+        }
+
+        #main {
+            margin: auto;
+            margin-top: 3vw;
+            width: 90%;
+            background-color: #1a1a1a;
+        }
+
+        #name {
+            font-size: 3vw;
+            margin-top: 0vw;
+            font-weight: bold;
+        }
+
+        #count {
+            font-size: 6vw;
+            margin-top: -2vw;
+        }
+
+        .side {
+            font-size: 4.5vw;
+            margin-top: -2vw;
+        }
+
+        #label {
+            font-size: 2vw;
+            margin-top: -3vw;
+        }
+
+        .sideCounts {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+        }
+
+        .label {
+            font-size: 3vw;
+        }
+
+        #embed {
+            width: 99%;
+            font-size: 2vw;
+        }
+
+        .model {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 90%;
+            height: 90%;
+            background-color: rgba(0, 0, 0, 0.89);
+            border: solid 0.1vw #fff;
+        }
+
+        #m {
+            width: 100%;
+        }
+
+        #rankings {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: repeat(2, 1fr);
+        }
+
+        body {
+            text-align: center;
+            background-color: #222222;
+            font-family: 'Open Sans', sans-serif;
+        }
+
+        #newname,
+        #newpass,
+        #newpass1,
+        #newname1,
+        #inputhmm4,
+        .newm {
+            height: 40px;
+            width: 500px;
+            background-color: #494949;
+            color: #FFFFFF;
+        }
+
+        ::placeholder {
+            color: #FFFFFF;
+            opacity: 1;
+        }
+
+        :-ms-input-placeholder {
+            color: #FFFFFF;
+            ;
+        }
+
+        ::-ms-input-placeholder {
+            color: #FFFFFF;
+            ;
+        }
+
+        .random {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            text-align: center;
+        }
+
+        .pop,
+        .new {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            text-align: center;
+        }
+
+        #search {
+            width: 100%;
+        }
+
+        .btn-outline-success {
+            margin-left: 175px;
+        }
+
+        .chan2 {
+            text-align: center;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            width: 100%;
+        }
+
+        .NewCreators,
+        .TopCreators,
+        .ViewedCreators {
+            border: solid;
+            border-color: #494949;
+            border-radius: 20px;
+        }
+
+        .cname {
+            white-space: nowrap;
+            overflow: hidden;
+            font-size: 23px;
+            font-family: 'Open Sans', sans-serif;
+            font-stretch: expanded;
+            color: #FFFFFF;
+        }
+
+        .count {
+            font-size: 35px;
+            font-family: 'Open Sans', sans-serif;
+            font-stretch: expanded;
+        }
+
+        .card {
+            width: 100%;
+            text-align: left;
+            white-space: nowrap;
+            overflow-x: hidden;
+            overflow-y: hidden;
+            text-overflow: ellipsis;
+            border-radius: 0px;
+            height: auto;
+        }
+
+        .card2:hover {
+            cursor: pointer;
+        }
+
+        .cimg {
+            float: left;
+        }
+
+        #edit {
+            border-radius: 50%;
+            padding: 0px;
+        }
+
+        .aligned {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            gap: 5px;
+        }
+
+        span {
+            padding: 10px;
+        }
+
+        #name {
+            font-size: 40px;
+            font-weight: bolder;
+            text-align: center;
+        }
+
+        .badges {
+            text-align: center;
+            margin-top: -35px;
+            border: solid 1px #FFF;
+        }
+
+        a,
+        a:hover {
+            color: #FFF;
+        }
+
+        #bell:hover {
+            cursor: pointer;
+        }
+
+        ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background-color: #333;
+        }
+
+        li {
+            float: left;
+        }
+
+        li a {
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+        }
+
+        li a:hover:not(.active) {
+            background-color: #111;
+        }
+
+        #dropdown {
+            transition: 500ms opacity, 500ms height;
+        }
+
+        #bell:hover,
+        #upload:hover {
+            cursor: pointer;
+        }
+
+        #results {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        @media (max-width: 600px) {
+            #results {
+                grid-template-columns: repeat(1, 1fr);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div id="nav">
+        <a href="./">
+            <img src="./mgcounts.png" alt="MGCounts">
+        </a>
+    </div>
+    <br>
+    <div id="main">
+        <h1 style="font-size: 2.5vw;"><b>BitView</b> Search:</h1>
+        <select id="select" style="height: 7vw; width: 30vw; font-size: 3vw;">
+            <option value="user">Channel</option>
+            <option value="video">Video</option>
+        </select>
+        <br>
+        <br>
+        <input id="search" style="height: 7vw; width: 75vw; font-size: 3vw;" placeholder="Search">
+        <br>
+        <br>
+        <button id="submit" style="height: 7vw; width: 30vw; font-size: 3vw;" onclick="submit()">Submit</button>
+        <br>
+        <br>
+        <div id="results"></div>
+    </div>
+    <script>
+        function submit() {
+            let type = document.getElementById("select").value;
+            fetch('https://bitview.mgcounts.com/search/' + type, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    query: document.getElementById("search").value
+                })
+            })
+                .then(response => response.json())
+                .then(data => {
+                    let length = 4;
+                    if (data.length < 4) {
+                        length = data.length;
+                    }
+                    if (type == 'video') {
+                        let results = document.getElementById("results");
+                        results.innerHTML = "";
+                        for (let i = 0; i < length; i++) {
+                            let video = data[i];
+                            let div = `
+                                <div style="text-align: left; margin-bottom: 1.5vw;">
+                                <a href="/stats?vid=${video.id}">
+                                <img style="border: solid #FFF; height: 9vw; width: 100%; margin-top: 0vw; object-fit: cover;" src="https://www.bitview.net/u/thmp/${video.id}.jpg">
+                                <h1 style="max-width: 24vw; font-size: 15px; font-weight: bold; text-overflow: clip; overflow: hidden; white-space: nowrap;">Some Transit City 3 footage from mid-may lol</h1></a>
+                                <a href="/stats?cid=${video.poster}" style="display: flex;">
+                                    <img style="margin-top: -5px; border-radius: 50%; height: 2.5vw; width: 2.5vw; float: left;" src="https://www.bitview.net//u/av/${video.poster}.jpg" id="photo${i}">
+                                    <div><h6 style="max-width: 24vw; text-overflow: clip; overflow: hidden; white-space: nowrap; font-size: 15px; margin-top: 0vw; margin-bottom: 0vw;">${video.views} views • ${video.posted}</h6>
+                                        <h6 style="max-width: 24vw; text-overflow: clip; overflow: hidden; white-space: nowrap; font-size: 15px; margin-top: 0vw; margin-bottom: 0vw; font-weight: bold;">${video.poster}</h6></div>
+                                    </a></div>`
+                            results.innerHTML += div;
+                            document.getElementById("photo" + i).addEventListener("error", function () {
+                                document.getElementById("photo" + i).src = "https://www.bitview.net/img/no_videos_140.jpg";
+                            });
+                        }
+                    } else {
+                        let results = document.getElementById("results");
+                        results.innerHTML = "";
+                        for (let i = 0; i < length; i++) {
+                            let channel = data[i];
+                            let div = `
+                                <div style="text-align: center; margin-bottom: 1.5vw;">
+                                <a href="/stats?cid=${channel.name}">
+                                <img style="border: solid #FFF; height: 9vw; width: 9vw; margin-top: 0vw; object-fit: cover; border-radius: 50%;" src="https://www.bitview.net//u/av/${channel.name}.jpg" id="photo${i}">
+                                <h1 style="font-size: 25px; font-weight: bold; text-overflow: clip; overflow: hidden; white-space: nowrap;">${channel.name}</h1></a>
+                                <h1 style="font-size: 25px;">${channel.subscribers} subscribers • ${channel.views} views</h1></div>`
+                            results.innerHTML += div;
+                            document.getElementById("photo" + i).addEventListener("error", function () {
+                                document.getElementById("photo" + i).src = "https://www.bitview.net/img/no_videos_140.jpg";
+                            });
+                        }
+                    }
+                })
+        }
+    </script>
+</body>
+
+</html>
